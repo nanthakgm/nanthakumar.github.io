@@ -103,6 +103,17 @@
     max-width:16ch;
   }
   .hero h1 .accent{color:var(--blueprint);}
+  .hero-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:64px;align-items:center;}
+  .hero-visual{position:relative;min-height:430px;display:grid;place-items:center;isolation:isolate;}
+  .hero-visual::before{content:'';position:absolute;width:330px;height:330px;border:1px solid rgba(79,209,255,.35);border-radius:50%;box-shadow:0 0 70px rgba(79,209,255,.12),inset 0 0 35px rgba(79,209,255,.06);animation:spin 18s linear infinite;}
+  .hero-visual::after{content:'PROFILE / MECHANICAL ENGINEERING';position:absolute;bottom:4px;right:0;color:var(--ink-faint);font:11px 'IBM Plex Mono';letter-spacing:.09em;transform:rotate(-90deg) translateX(48%);transform-origin:right center;}
+  .hero-portrait{position:relative;width:270px;height:340px;object-fit:cover;object-position:center;border:1px solid rgba(79,209,255,.5);padding:8px;background:var(--bg-panel);box-shadow:18px 18px 0 rgba(226,149,79,.16),0 22px 70px rgba(0,0,0,.36);animation:float 5s ease-in-out infinite;z-index:2;}
+  .hero-visual .datum{position:absolute;color:var(--copper);font:11px 'IBM Plex Mono';letter-spacing:.06em;z-index:3;}
+  .hero-visual .datum.top{top:18px;left:8px}.hero-visual .datum.bottom{bottom:18px;left:8px;color:var(--blueprint)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero-visual::before,.hero-portrait{animation:none}.fade-in{opacity:1;transform:none;transition:none}}
+
   .hero .role{
     margin-top:24px; font-size:19px; color:var(--ink-dim); max-width:52ch;
   }
@@ -230,7 +241,8 @@
   .fade-in.visible{opacity:1; transform:translateY(0);}
 
   @media (max-width:800px){
-    .about-grid, .skills-grid, .spec-row, .project-grid{grid-template-columns:1fr;}
+    .hero-layout,.about-grid, .skills-grid, .spec-row, .project-grid{grid-template-columns:1fr;}
+    .hero-visual{min-height:380px;margin-top:8px}.hero-portrait{width:230px;height:290px}.hero-visual::before{width:280px;height:280px}.hero-visual::after{display:none}
     nav{display:none;}
     section{padding:80px 22px;}
     header.topbar{padding:16px 22px;}
@@ -262,17 +274,26 @@
   <section class="hero">
     <div class="eyebrow"><span class="dot"></span> OPEN TO INTERNATIONAL MECHANICAL ENGINEERING ROLES</div>
     <h1>Mechanical engineer, <span class="accent">connecting manufacturing to design.</span></h1>
-    <p class="role">I build and inspect wind turbine components — machine shop, coil shop, NDT — and I'm moving that hands-on manufacturing knowledge into CAD-led design engineering. Every part I draw, I already know how it gets made and how it fails.</p>
+    <div class="hero-layout">
+      <div class="hero-copy">
+        <p class="role">I build and inspect wind turbine components — machine shop, coil shop, NDT — and I'm moving that hands-on manufacturing knowledge into CAD-led design engineering. Every part I draw, I already know how it gets made and how it fails.</p>
 
-    <div class="meta-row">
+        <div class="meta-row">
       <div class="meta-item"><div class="val">4+</div><div class="lab">yrs manufacturing</div></div>
       <div class="meta-item"><div class="val">3</div><div class="lab">core NDT methods · VT · MPT · LPT</div></div>
       <div class="meta-item"><div class="val">CAD</div><div class="lab">design · fixtures · manufacturing</div></div>
-    </div>
+        </div>
 
-    <div class="hero-cta">
-      <a href="#project" class="btn btn-primary">View Engineering Work →</a>
-      <a href="#contact" class="btn btn-outline">Get in touch</a>
+        <div class="hero-cta">
+          <a href="#project" class="btn btn-primary">View Engineering Work →</a>
+          <a href="#contact" class="btn btn-outline">Get in touch</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="Professional portrait of Nanthakumar R">
+        <span class="datum top">ID / NANTHAKUMAR-R</span>
+        <img class="hero-portrait" src="nanthakumar-professional-dp.webp" alt="Nanthakumar R, Mechanical Engineer">
+        <span class="datum bottom">ME · CAD · NDT · MFG</span>
+      </div>
     </div>
 
     <div class="signature-wrap">
@@ -290,7 +311,7 @@
     <div class="section-label"><span class="num mono">01</span><span class="rule"></span><span class="title">About</span></div>
     <div class="about-grid fade-in">
       <div>
-        <div class="profile-chip"><img src="nanthakumar-linkedin-profile.webp" alt="Nanthakumar R, Mechanical Engineer"><div><div class="eyebrow"><span class="dot"></span> ENGINEER · WIND TURBINE MANUFACTURING</div><p style="margin:8px 0 0">Winomechanic Pvt. Ltd. · Leitwind Group, Italy</p></div></div>
+        <div class="profile-chip"><img src="nanthakumar-professional-dp.webp" alt="Nanthakumar R, Mechanical Engineer"><div><div class="eyebrow"><span class="dot"></span> ENGINEER · WIND TURBINE MANUFACTURING</div><p style="margin:8px 0 0">Winomechanic Pvt. Ltd. · Leitwind Group, Italy</p></div></div>
         <p>I'm a Mechanical Engineer with hands-on experience in shop-floor supervision, production operations, and quality compliance. At Winomechanic Pvt. Ltd. in Gummidipoondi, I support Machine Shop and Coil Shop operations through workforce coordination, production tracking, and safety and quality standards.</p>
         <div class="quote">"You don't design a good fixture from a drawing alone — you design it from having stood at the machine."</div>
         <p>My manufacturing foundation also includes assembly-line and quality-inspection experience at Brakes India Pvt. Ltd. and thermal power plant exposure at NLC India Limited, including ash-handling systems.</p>
