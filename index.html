@@ -107,7 +107,14 @@
   .hero-visual{position:relative;min-height:430px;display:grid;place-items:center;isolation:isolate;}
   .hero-visual::before{content:'';position:absolute;width:330px;height:330px;border:1px solid rgba(79,209,255,.35);border-radius:50%;box-shadow:0 0 70px rgba(79,209,255,.12),inset 0 0 35px rgba(79,209,255,.06);animation:spin 18s linear infinite;}
   .hero-visual::after{content:'PROFILE / MECHANICAL ENGINEERING';position:absolute;bottom:4px;right:0;color:var(--ink-faint);font:11px 'IBM Plex Mono';letter-spacing:.09em;transform:rotate(-90deg) translateX(48%);transform-origin:right center;}
-  .hero-portrait{position:relative;width:270px;height:340px;object-fit:cover;object-position:center;border:1px solid rgba(79,209,255,.5);padding:8px;background:var(--bg-panel);box-shadow:18px 18px 0 rgba(226,149,79,.16),0 22px 70px rgba(0,0,0,.36);animation:float 5s ease-in-out infinite;z-index:2;}
+  .hero-portrait{position:relative;width:270px;height:340px;object-fit:cover;object-position:center;border:1px solid rgba(79,209,255,.5);padding:8px;background:var(--bg-panel);box-shadow:18px 18px 0 rgba(226,149,79,.16),0 22px 70px rgba(0,0,0,.36);animation:float 5s ease-in-out infinite;z-index:2;transition:transform .55s cubic-bezier(.2,.8,.2,1),box-shadow .55s ease;}
+  .hero-portrait:hover{transform:translateY(-8px) rotateY(-5deg) rotateX(3deg);box-shadow:24px 28px 0 rgba(226,149,79,.2),0 30px 90px rgba(0,0,0,.45);}
+  .scroll-progress{position:fixed;top:0;left:0;width:100%;height:3px;background:rgba(79,209,255,.08);z-index:100;pointer-events:none}.scroll-progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--copper),var(--blueprint));box-shadow:0 0 14px var(--blueprint);}
+  .recruiter-trigger{font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.07em;color:var(--bg);background:var(--copper);border:0;padding:10px 14px;cursor:pointer;transition:transform .2s,background .2s}.recruiter-trigger:hover{background:#f2b171;transform:translateY(-2px)}
+  .recruiter-panel{position:fixed;inset:0;z-index:90;display:grid;place-items:center;background:rgba(4,9,17,.78);backdrop-filter:blur(14px);opacity:0;pointer-events:none;transition:opacity .35s ease}.recruiter-panel.open{opacity:1;pointer-events:auto}.recruiter-card{width:min(680px,calc(100% - 36px));border:1px solid var(--blueprint);background:linear-gradient(145deg,#122039,#09111f);padding:34px;box-shadow:0 28px 100px rgba(0,0,0,.55);transform:translateY(18px) scale(.98);transition:transform .35s ease}.recruiter-panel.open .recruiter-card{transform:none}.recruiter-card h2{font-size:28px;margin-bottom:10px}.recruiter-card p{color:var(--ink-dim);margin-bottom:18px}.recruiter-card .summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:24px 0}.recruiter-card .summary-item{border:1px solid var(--line);padding:14px;background:rgba(79,209,255,.035)}.recruiter-card .summary-item strong{display:block;color:var(--blueprint);font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}.recruiter-close{float:right;border:1px solid var(--line);background:transparent;color:var(--ink);padding:7px 10px;cursor:pointer}.recruiter-close:hover{border-color:var(--blueprint);color:var(--blueprint)}
+  .project-card,.mini-project{transition:transform .45s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .45s}.project-card:hover,.mini-project:hover{transform:translateY(-7px);border-color:rgba(79,209,255,.55);box-shadow:0 18px 55px rgba(0,0,0,.24)}
+  .active-nav{color:var(--blueprint)!important;text-shadow:0 0 12px rgba(79,209,255,.35)}
+
   .hero-visual .datum{position:absolute;color:var(--copper);font:11px 'IBM Plex Mono';letter-spacing:.06em;z-index:3;}
   .hero-visual .datum.top{top:18px;left:8px}.hero-visual .datum.bottom{bottom:18px;left:8px;color:var(--blueprint)}
   @keyframes spin{to{transform:rotate(360deg)}}
@@ -254,17 +261,20 @@
 <div class="grid-bg"></div>
 <div class="sheet-frame"></div>
 
-<header class="topbar">
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+  <header class="topbar">
   <div class="brand">
     <span class="mark mono">◆</span>
     <span class="name">NANTHAKUMAR</span>
   </div>
-  <nav>
+    <nav>
     <a href="#about">About</a>
     <a href="#path">Path</a>
     <a href="#skills">Skills</a>
     <a href="#project">Project</a>
     <a href="#contact">Contact</a>
+    <button class="recruiter-trigger" id="recruiterOpen" type="button">RECRUITER VIEW</button>
   </nav>
 </header>
 
@@ -291,7 +301,7 @@
       </div>
       <div class="hero-visual" aria-label="Professional portrait of Nanthakumar R">
         <span class="datum top">ID / NANTHAKUMAR-R</span>
-        <img class="hero-portrait" src="nanthakumar-professional-dp.webp" alt="Nanthakumar R, Mechanical Engineer">
+        <img class="hero-portrait" src="nanthakumar-sent-portrait.png" alt="Nanthakumar R, Mechanical Engineer">
         <span class="datum bottom">ME · CAD · NDT · MFG</span>
       </div>
     </div>
@@ -311,7 +321,7 @@
     <div class="section-label"><span class="num mono">01</span><span class="rule"></span><span class="title">About</span></div>
     <div class="about-grid fade-in">
       <div>
-        <div class="profile-chip"><img src="nanthakumar-professional-dp.webp" alt="Nanthakumar R, Mechanical Engineer"><div><div class="eyebrow"><span class="dot"></span> ENGINEER · WIND TURBINE MANUFACTURING</div><p style="margin:8px 0 0">Winomechanic Pvt. Ltd. · Leitwind Group, Italy</p></div></div>
+        <div class="profile-chip"><img src="nanthakumar-sent-portrait.png" alt="Nanthakumar R, Mechanical Engineer"><div><div class="eyebrow"><span class="dot"></span> ENGINEER · WIND TURBINE MANUFACTURING</div><p style="margin:8px 0 0">Winomechanic Pvt. Ltd. · Leitwind Group, Italy</p></div></div>
         <p>I'm a Mechanical Engineer with hands-on experience in shop-floor supervision, production operations, and quality compliance. At Winomechanic Pvt. Ltd. in Gummidipoondi, I support Machine Shop and Coil Shop operations through workforce coordination, production tracking, and safety and quality standards.</p>
         <div class="quote">"You don't design a good fixture from a drawing alone — you design it from having stood at the machine."</div>
         <p>My manufacturing foundation also includes assembly-line and quality-inspection experience at Brakes India Pvt. Ltd. and thermal power plant exposure at NLC India Limited, including ash-handling systems.</p>
@@ -421,6 +431,22 @@
     </div>
   </section>
 
+  <div class="recruiter-panel" id="recruiterPanel" aria-hidden="true">
+    <div class="recruiter-card" role="dialog" aria-modal="true" aria-labelledby="recruiterTitle">
+      <button class="recruiter-close" id="recruiterClose" type="button" aria-label="Close recruiter summary">×</button>
+      <div class="section-label" style="margin-bottom:20px"><span class="num mono">R-01</span><span class="rule"></span><span class="title">Recruiter Summary</span></div>
+      <h2 id="recruiterTitle">Mechanical Engineer built from the shop floor.</h2>
+      <p>Manufacturing-first engineer focused on wind-turbine components, CAD-led mechanical improvement, fixture and handling safety, NDT inspection, and Excel-based production visibility.</p>
+      <div class="summary-grid">
+        <div class="summary-item"><strong>Target roles</strong>Mechanical Design · Manufacturing · Production · Quality</div>
+        <div class="summary-item"><strong>Core tools</strong>SolidWorks · AutoCAD · Excel · SAP basics</div>
+        <div class="summary-item"><strong>Engineering edge</strong>Design decisions grounded in real shop-floor execution</div>
+        <div class="summary-item"><strong>Availability</strong>Open to international opportunities and relocation</div>
+      </div>
+      <a href="#contact" class="btn btn-primary" id="recruiterContact">Open contact details →</a>
+    </div>
+  </div>
+
   <!-- CONTACT -->
   <section id="contact">
     <div class="section-label"><span class="num mono">05</span><span class="rule"></span><span class="title">Contact</span></div>
@@ -442,12 +468,35 @@
   <span>MECHANICAL DESIGN · CAD · MANUFACTURING · RENEWABLE ENERGY</span>
 </footer>
 
-<script>
+  <script>
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.15 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-</script>
+
+  const progress = document.querySelector('.scroll-progress span');
+  const updateProgress = () => { const max = document.documentElement.scrollHeight - innerHeight; progress.style.width = `${max > 0 ? (scrollY / max) * 100 : 0}%`; };
+  addEventListener('scroll', updateProgress, {passive:true}); updateProgress();
+
+  const recruiterPanel = document.getElementById('recruiterPanel');
+  const openRecruiter = () => { recruiterPanel.classList.add('open'); recruiterPanel.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; };
+  const closeRecruiter = () => { recruiterPanel.classList.remove('open'); recruiterPanel.setAttribute('aria-hidden','true'); document.body.style.overflow=''; };
+  document.getElementById('recruiterOpen')?.addEventListener('click', openRecruiter);
+  document.getElementById('recruiterClose')?.addEventListener('click', closeRecruiter);
+  document.getElementById('recruiterContact')?.addEventListener('click', closeRecruiter);
+  recruiterPanel?.addEventListener('click', e => { if(e.target === recruiterPanel) closeRecruiter(); });
+  addEventListener('keydown', e => { if(e.key === 'Escape') closeRecruiter(); });
+
+  const navLinks = [...document.querySelectorAll('nav a')];
+  const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const navObserver = new IntersectionObserver(entries => entries.forEach(entry => { if(entry.isIntersecting){navLinks.forEach(a => a.classList.toggle('active-nav', a.getAttribute('href') === `#${entry.target.id}`));}}), {rootMargin:'-35% 0px -55% 0px'});
+  sections.forEach(s => navObserver.observe(s));
+
+  const visual = document.querySelector('.hero-visual');
+  if (visual && matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+    addEventListener('pointermove', e => { const x=(e.clientX/innerWidth-.5)*8; const y=(e.clientY/innerHeight-.5)*8; visual.style.transform=`translate(${x}px,${y}px)`; }, {passive:true});
+  }
+  </script>
 
 </body>
 </html>
